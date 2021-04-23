@@ -14,11 +14,14 @@ export_env_dir() {
   fi
 }
 
+app_dir=$1
 export_env_dir $3
 
 SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed"
 
-if [[ -z "${DEPLOY_NOTIFY_GITHUB_AUTH_TOKEN}" || -z "${DEPLOY_NOTIFY_GITHUB_ORG}" || -z "${DEPLOY_NOTIFY_GITHUB_PROJECT}" ]]; then
+if [[ -d "${app_dir}/.git" ]]; then
+  SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed\n\n\`\`\`\n$(git show --stat)\n\`\`\`\n"
+elif [[ -z "${DEPLOY_NOTIFY_GITHUB_AUTH_TOKEN}" || -z "${DEPLOY_NOTIFY_GITHUB_ORG}" || -z "${DEPLOY_NOTIFY_GITHUB_PROJECT}" ]]; then
   # Not loading Github Data
   SLACK_MESSAGE="$SLACK_MESSAGE"
 elif [[ -z "${SOURCE_VERSION}" ]]; then
