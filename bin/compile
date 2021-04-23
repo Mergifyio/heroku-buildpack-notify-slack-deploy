@@ -20,7 +20,7 @@ export_env_dir $3
 SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed"
 
 if [[ -d "${app_dir}/.git" ]]; then
-  SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed\n\n\`\`\`\n$(cd ${app_dir}/.git && git show --stat)\n\`\`\`\n"
+  SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed\n\n\`\`\`\n$(cd ${app_dir}/.git && git log -1)\n\`\`\`\n"
 elif [[ -z "${DEPLOY_NOTIFY_GITHUB_AUTH_TOKEN}" || -z "${DEPLOY_NOTIFY_GITHUB_ORG}" || -z "${DEPLOY_NOTIFY_GITHUB_PROJECT}" ]]; then
   # Not loading Github Data
   SLACK_MESSAGE="$SLACK_MESSAGE"
