@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-if [ -z "$SLACK_DEPLOYMENT_WEBHOOK_URL" ]; then
-    echo "SLACK_DEPLOYMENT_WEBHOOK_URL not set, skipping slack notification"
-    exit 0
-fi
-
 export_env_dir() {
   # from https://devcenter.heroku.com/articles/buildpack-api#bin-compile
   env_dir=$1
@@ -21,6 +16,11 @@ export_env_dir() {
 
 app_dir=$1
 export_env_dir $3
+
+if [ -z "$SLACK_DEPLOYMENT_WEBHOOK_URL" ]; then
+    echo "SLACK_DEPLOYMENT_WEBHOOK_URL not set, skipping slack notification"
+    exit 0
+fi
 
 SLACK_MESSAGE="*$HEROKU_APP_NAME* was deployed"
 
