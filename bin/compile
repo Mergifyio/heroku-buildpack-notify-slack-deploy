@@ -18,7 +18,7 @@ app_dir=$1
 export_env_dir $3
 
 if [ -z "$SLACK_DEPLOYMENT_WEBHOOK_URL" ]; then
-    echo "SLACK_DEPLOYMENT_WEBHOOK_URL not set, skipping slack notification"
+    echo "SLACK_DEPLOYMENT_WEBHOOK_URL not set, skipping Slack notification"
     exit 0
 fi
 
@@ -26,11 +26,11 @@ STAMP="${app_dir}/.stamp-deployement-started"
 
 if [ -f "$STAMP" ]; then
     LOGS=$(cd ${app_dir}/.git && git log -1)
-    SLACK_MESSAGE="*$HEROKU_APP_NAME* is deployed\n\n\`\`\`\n${LOGS}\n\`\`\`\n"
+    SLACK_MESSAGE="*$HEROKU_APP_NAME* has been deployed\n\n\`\`\`\n${LOGS}\n\`\`\`\n"
     echo "-----> Notifying Slack that the deploy is complete"
     echo "       $SLACK_MESSAGE"
 else
-    SLACK_MESSAGE="*$HEROKU_APP_NAME* start deploying\n"
+    SLACK_MESSAGE="*$HEROKU_APP_NAME* deployment started\n"
     echo "-----> Notifying Slack that the deploy is starting"
     echo "       $SLACK_MESSAGE"
 fi
